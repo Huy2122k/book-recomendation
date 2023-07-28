@@ -1,0 +1,3 @@
+from .ContentBaseRecommendation import ContentBaseRecommendation
+from .ItemBasedRecommendation import ItemBasedRecommendation
+from .UserBasedRecommendation import UserBasedRecommendation
