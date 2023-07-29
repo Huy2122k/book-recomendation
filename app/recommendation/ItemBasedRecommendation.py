@@ -78,7 +78,7 @@ class ItemBasedRecommendation(Recommendation):
 
         if book_id in book_index_mapping.keys():
             # find nearest neighbors
-            _, neighbor_indices = knn_model.kneighbors([book_user_matrix[2]], n_neighbors=rec_number+1)
+            _, neighbor_indices = knn_model.kneighbors([book_user_matrix[book_index_mapping[book_id]]], n_neighbors=rec_number+1)
             # remove itself from recommendations list
             neighbor_indices = neighbor_indices.squeeze()[1:]
             recommended_items = [index_book_mapping[neighbor_index] for neighbor_index in neighbor_indices]

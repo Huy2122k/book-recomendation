@@ -1,10 +1,25 @@
+version: "3.8"
 services:
-  web: 
-    build:
-      context: app
-      target: builder
-    # flask requires SIGINT to stop gracefully
-    # (default stop signal from Compose is SIGTERM)
-    stop_signal: SIGINT
+  book-recommend:
+    image: book_rec:2807
+    restart: unless-stopped
+    env_file: ./.env
+    environment:
+      - DB_USERNAME=$DB_USERNAME
+      - DB_PASSWORD=$DB_PASSWORD
+      - DB_HOST=mysqldb
+      - DB_PORT=3306
     ports:
-      - '8000:8000'
+      - 8000:8000
+    entrypoint: ["python3"]
+    command: app.py
+    volumes:
+      - ./app:/app
+    networks:
+      book-library-doan-thietke_new_be:
+        aliases:
+          - book-recommend
+
+networks:
+  book-library-doan-thietke_new_be:
+    external: true

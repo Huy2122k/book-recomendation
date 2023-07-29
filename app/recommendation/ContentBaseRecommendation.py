@@ -1,4 +1,5 @@
 from datetime import datetime, timedelta
+from random import shuffle
 
 import numpy as np  # linear algebra
 from data_manager import DataManager
@@ -68,7 +69,7 @@ class ContentBaseRecommendation(Recommendation):
             publisher_similarity = cosine_similarity(query_publisher_vector, publisher_vectors)[0]
 
             # Tổng hợp điểm số dựa trên tiêu đề, tác giả và nhà xuất bản
-            total_similarity = title_similarity + author_similarity + publisher_similarity
+            total_similarity = 0.6*title_similarity + 0.3*author_similarity + 0.1*publisher_similarity
 
             # Sắp xếp và lấy top n sách gợi ý
             similar_books_indices = np.argsort(total_similarity)[::-1][1:top_n + 1]  # Bỏ qua sách cần tìm
@@ -81,6 +82,7 @@ class ContentBaseRecommendation(Recommendation):
     
     def predict(self, book_id, rec_number):
         book_rec_ids = self.content_based(book_id, rec_number)
+        shuffle(book_rec_ids)
         return book_rec_ids
     
     def samples(self):
