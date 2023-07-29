@@ -46,7 +46,7 @@ class AppWrapper(object):
         return random.choices(self.data_manager.get_popular_books(30), k=10)
 
     def summary_recommend(self, id, type):
-        num_rec = request.args.get('num_rec', 5)
+        num_rec = request.args.get('num_rec', 10)
         return getattr(self, type).predict(id, num_rec)
     
     def update_rec_models(self):
